@@ -47,7 +47,7 @@ public:
 
   void print(std::ostream& out) const
   {
-    out <<"Size: " << size_ << " Capacity: " << capacity_ /*<< " Bucket: "<< bucket_ */<< "\n";
+    out <<"Size: " << size_ << " Capacity: " << capacity_ << "\n";
     for (const auto& x: *this)
       out << "Key: " << x.first << " Value: " << x.second << "\n";
 

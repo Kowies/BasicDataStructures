@@ -570,6 +570,4 @@ public:
 
 }
 
-
-
 #endif // AISDI_LINEAR_VECTOR_H

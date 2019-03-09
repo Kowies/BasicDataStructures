@@ -26,10 +26,7 @@ public:
   using iterator = Iterator;
   using const_iterator = ConstIterator;
 
-
-
 private:
-
 
   struct Node
   {
@@ -40,19 +37,15 @@ private:
     value_type &value = *reinterpret_cast <pointer> (data);
 
     Node() : next(this), prev(this)
-    {
-      //std::cout << "Node()" << std::endl;
-    }
+    {}
 
     Node(const_reference x):  next(this), prev(this)
     {
-      //std::cout << "Node(const_reference x):" << std::endl;
       new (data) value_type(x);
     }
 
     ~Node()
     {
-      //std::cout << "~Node()" << std::endl;
       if (next == this)
         return;
 
@@ -79,10 +72,8 @@ private:
 
   size_type size_ = 0;
 
-
   Node* & head = watchman_.next;
   Node* & tail = watchman_.prev;
-
 
 public:
 
@@ -99,33 +90,23 @@ public:
     out << std::endl;
   }
 
-  LinkedList() :  size_(0)
-  {
-    //std::cout << "LinkedList()" << std::endl;
-  }
+  LinkedList(): size_(0)
+  {}
 
   LinkedList(std::initializer_list<Type> l)
   {
-    //std::cout << "LinkedList(std::initializer_list<Type> l)" << std::endl;
-
     for (auto iter = l.begin(); iter != l.end(); ++iter)
       append(*iter);
   }
 
   LinkedList(const LinkedList& other)
   {
-        //std::cout << "const LinkedList& other" << std::endl;
-
-
-
     for (auto iter = other.begin(); iter != other.end(); ++iter)
       append(*iter);
   }
 
   LinkedList(LinkedList&& other)
   {
-
-    //std::cout << "LinkedList(LinkedList&& other)" << std::endl;
     other.head->prev = &watchman_;
     other.tail->next = &watchman_;
     watchman_.next = other.head;
@@ -139,18 +120,14 @@ public:
 
   ~LinkedList()
   {
-
-    //std::cout << "~LinkedList()" << std::endl;
     if (size_ == 0)
       return;
 
     erase(begin(), end());
   }
-  //can be faster!
+
   LinkedList& operator=(const LinkedList& other)
   {
-    //std::cout << "LinkedList& operator=(const LinkedList& other)" << std::endl;
-
     if (this == &other)
       return *this;
 
@@ -168,7 +145,6 @@ public:
 
   LinkedList& operator=(LinkedList&& other)
   {
-    //std::cout << "LinkedList& operator=(LinkedList&& other)" << std::endl;
 
     if (size_ != 0)
     {
@@ -225,7 +201,6 @@ public:
     ++size_;
   }
 
-  //insert beore insertPosition
   void insert(const const_iterator& insertPosition, const Type& item)
   {
     Node *afterNew = insertPosition.ptr_;
@@ -241,7 +216,6 @@ public:
 
     ++size_;
   }
-
 
   Type popFirst()
   {
@@ -300,9 +274,6 @@ public:
 
     if (size_ == 0)
       throw std::out_of_range("L erase(i)");
-
-
-
 
     Node *beforeFirstIncludedPtr = firstIncluded.ptr_->prev;
     Node *lastExcludedPtr = lastExcluded.ptr_;
@@ -542,28 +513,5 @@ public:
 };
 
 }
-/*
-int main()
-{
-  aisdi::LinkedList <int> x;
 
-  x.append(3);
-
-  x.append(123);
-
-  x.prepend(142412);
-
-  x.print();
-
-  auto tmp = x.cbegin();
-
-
-  ++tmp;
-  x.erase(tmp);
-
-
-
-  return 0;
-}
-*/
 #endif // AISDI_LINEAR_LINKEDLIST_H
